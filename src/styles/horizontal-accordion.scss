@@ -1,0 +1,152 @@
+$base-line-height: 30;
+$rhythm-unit:      $base-line-height/2;
+$line-color: #ccc;
+$lw-red: #f05022;
+$x-accordion-transition:0.3s ease;
+
+@function calcRem($size) {
+    @if $size == 0 { @return 0 }
+    $remSize: $size / 16;
+    @return #{$remSize}rem;
+}
+
+@mixin font-size($font-size) {
+    font-size:calcRem($font-size);
+}
+
+.visuallyhidden {
+    border:0!important;
+    clip:rect(0 0 0 0)!important;
+    height:1px!important;
+    margin:-1px!important;
+    overflow:hidden!important;
+    padding:0!important;
+    position: absolute!important;
+    width:1px!important;
+}
+
+h3, h4, p {
+    margin:0;
+    padding:0;
+}
+
+h3 {
+    @include font-size(18);
+    padding:0 0 15px;
+    color:$lw-red;
+    transition:padding $x-accordion-transition;
+}
+
+.x-schedule-trigger {
+    display:block;
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    text-decoration:none;
+    z-index:1;
+
+    &:before {
+        font-size:18px;
+        content:"+";
+        display:block;
+        width:1.5em;
+        height:1.5em;
+        background:$lw-red;
+        color:white;
+        line-height:1.4em;
+        text-align:center;
+        position:absolute;
+        top:40%;
+        left:50%;
+        transform:translateX(-50%);
+    }
+}
+
+.x-day-group {
+    padding:15px 25px;
+    will-change:opacity, transform;
+    opacity:1;
+    transform:transformX(0);
+
+    h3 + & {
+        padding-top:0;
+    }
+}
+
+.is-active {
+    h3 {
+        padding:0 25px 15px;
+    }
+    .x-schedule-trigger {
+        display:none;
+    }
+// .x-day-group transitions are handled by GSAP
+}
+
+.x-accordion {
+    width: 95%;
+    height: 100%;
+    display:flex;
+    overflow:hidden;
+    //max-width:575px;
+    margin:25px auto;
+    @include font-size(14);
+    line-height:1.5;
+}
+
+.x-accordion-panel {
+    //width: 100%;
+    height: 100%;
+    flex:initial;
+    min-width:80px;
+    border-left:1px solid $line-color;
+    border-right:1px solid $line-color;
+    position:relative;
+    margin-left:-1px;
+    width:10%;
+    will-change:width;
+    transition:$x-accordion-transition;
+
+    &:first-child {
+        margin-left:0;
+    }
+
+    &.is-active {
+        width:80%;
+    }
+}
+
+.x-accordion-content {
+    width: 100%;
+    box-sizing: border-box;
+
+    overflow:hidden;
+    //padding: 22px;
+    //padding:16px;
+    white-space:nowrap;
+
+    > *:first-child {
+        margin-top:0;
+    }
+
+    h3 {
+        text-transform:uppercase;
+    }
+}
+
+.x-schedule-trigger {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.x-is-power-hour {
+    background-color:$lw-red;
+    color:white;
+}
